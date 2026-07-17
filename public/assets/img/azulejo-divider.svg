@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="40" viewBox="0 0 300 40" fill="none" stroke="#B8904A" stroke-width="1.1" role="img" aria-label="Azulejo divider">
+  <line x1="0" y1="20" x2="108" y2="20"/>
+  <rect x="116" y="12" width="16" height="16" transform="rotate(45 124 20)"/>
+  <rect x="142" y="12" width="16" height="16" transform="rotate(45 150 20)"/>
+  <rect x="168" y="12" width="16" height="16" transform="rotate(45 176 20)"/>
+  <line x1="192" y1="20" x2="300" y2="20"/>
+</svg>

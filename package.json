@@ -1,0 +1,24 @@
+{
+  "name": "cedr-co",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Cedr & Co — premium travel companionship website with live trip estimator",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:pricing": "node src/lib/pricing.test.js",
+    "test:duffel": "node api/_map.test.js",
+    "test": "npm run test:pricing && npm run test:duffel"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.2",
+    "vite": "^5.4.8"
+  }
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#B8904A" stroke-width="1.1" role="img" aria-label="Azulejo rosette motif">
+  <circle cx="200" cy="200" r="196"/>
+  <circle cx="200" cy="200" r="168"/>
+  <circle cx="305" cy="200" r="105"/>
+  <circle cx="274.25" cy="274.25" r="105"/>
+  <circle cx="200" cy="305" r="105"/>
+  <circle cx="125.75" cy="274.25" r="105"/>
+  <circle cx="95" cy="200" r="105"/>
+  <circle cx="125.75" cy="125.75" r="105"/>
+  <circle cx="200" cy="95" r="105"/>
+  <circle cx="274.25" cy="125.75" r="105"/>
+  <circle cx="200" cy="200" r="105"/>
+  <rect x="96" y="96" width="208" height="208" transform="rotate(45 200 200)"/>
+  <rect x="118" y="118" width="164" height="164"/>
+  <circle cx="200" cy="200" r="58"/>
+  <rect x="162" y="162" width="76" height="76" transform="rotate(45 200 200)"/>
+</svg>
