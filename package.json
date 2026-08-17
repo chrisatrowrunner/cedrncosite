@@ -9,8 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:pricing": "node src/lib/pricing.test.js",
-    "test:duffel": "node api/_map.test.js",
-    "test": "npm run test:pricing && npm run test:duffel"
+    "test": "npm run test:pricing && npm run test:api",
+    "test:api": "node api/_map.test.js"
   },
   "dependencies": {
     "react": "^18.3.1",

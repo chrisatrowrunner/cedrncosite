@@ -1,7 +1,8 @@
 // GET /api/locations?keyword=por
 // City & airport autocomplete via Duffel Places (GET /places/suggestions).
-import { duffelGet, duffelConfigured, send } from './_duffel.js';
+import { duffelGet, duffelConfigured } from './_duffel.js';
 import { mapPlaces } from './_map.js';
+import { send } from './_http.js';
 
 export default async function handler(req, res) {
   const keyword = (req.query.keyword || '').toString().trim();

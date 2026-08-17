@@ -165,7 +165,7 @@ input:focus { outline: none; }
   padding: 10px; background: rgba(255, 255, 255, 0.03);
 }
 .photo-frame img {
-  width: 100%; height: 520px; object-fit: cover; object-position: center 30%;
+  width: 100%; height: auto; max-height: 600px; object-fit: contain;
   border-radius: 4px; display: block;
 }
 .photo-caption {
@@ -514,13 +514,11 @@ input:focus { outline: none; }
   .nav__toggle span { display: block; width: 24px; height: 2px; background: var(--navy); }
 
   .story__grid { grid-template-columns: 1fr; gap: 44px; }
-  .about__grid { grid-template-columns: 1fr; gap: 44px; }
-  .about__grid .about__media { order: 2; }
+  .companion { grid-template-columns: 1fr; gap: 40px; }
+  .companion__media { order: 2; }
   .cards-3 { grid-template-columns: 1fr; gap: 24px; }
   .steps { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
   .dest-grid { grid-template-columns: 1fr; }
-  .photo-frame img { height: 420px; }
-  .about__frame img { height: 480px; }
 }
 
 @media (max-width: 560px) {
@@ -659,3 +657,55 @@ input:focus { outline: none; }
   .grand { flex-direction: column; align-items: flex-start; gap: 6px; }
   .range { text-align: left; }
 }
+
+/* ============================================================
+   Merged Story + Companion, and single-total estimate
+   ============================================================ */
+
+/* Companion block lives inside the navy .story section */
+.companion {
+  max-width: var(--maxw); margin: clamp(56px, 8vw, 104px) auto 0;
+  padding-top: clamp(48px, 6vw, 80px);
+  border-top: 1px solid rgba(184, 144, 74, 0.28);
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 6vw; align-items: center;
+}
+.companion__frame {
+  border: 1px solid rgba(184, 144, 74, 0.5); border-radius: 8px;
+  padding: 10px; background: rgba(255, 255, 255, 0.03);
+}
+.companion__frame img {
+  width: 100%; height: auto; max-height: 560px; object-fit: contain;
+  border-radius: 4px; display: block;
+}
+.companion__eyebrow { margin-bottom: 18px; }
+.companion__h {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06;
+  margin-bottom: 26px; color: var(--on-navy);
+}
+.companion p {
+  font-family: var(--font-body); font-size: 16.5px; line-height: 1.78;
+  color: var(--on-navy-muted); margin-bottom: 20px;
+}
+.companion .badges { margin-top: 28px; }
+.companion .badge { color: var(--on-navy-faint); border-color: rgba(184, 144, 74, 0.45); }
+
+/* Estimate showing only the grand total */
+.breakdown--total { text-align: left; }
+.grand--solo {
+  flex-direction: column; align-items: center; text-align: center;
+  border-top: none; margin-top: 8px; padding-top: 6px; gap: 6px;
+}
+.grand--solo .grand__label {
+  font-family: var(--font-ui); font-size: 13px; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--gold);
+}
+.grand--solo .grand__value {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(56px, 9vw, 92px); line-height: 1; color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+.grand--solo .grand__meta {
+  font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--body-muted);
+}
+.breakdown--total .fine-print { text-align: center; max-width: 520px; margin-left: auto; margin-right: auto; }

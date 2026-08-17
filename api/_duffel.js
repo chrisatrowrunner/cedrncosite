@@ -48,10 +48,3 @@ async function request(method, path, { params, body } = {}) {
 
 export const duffelGet = (path, params) => request('GET', path, { params });
 export const duffelPost = (path, body) => request('POST', path, { body });
-
-// Consistent JSON responses.
-export function send(res, status, payload) {
-  res.status(status).setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store');
-  res.end(JSON.stringify(payload));
-}

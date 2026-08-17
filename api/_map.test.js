@@ -1,5 +1,5 @@
 // Run: node api/_map.test.js   (verifies Duffel response parsing without the network)
-import { mapPlaces, cheapestOffer, cheapestStay, countryName } from './_map.js';
+import { mapPlaces, cheapestOffer, cheapestStay, cheapestGoogleFlight, countryName } from './_map.js';
 
 let pass = 0, fail = 0;
 function eq(label, got, want) {
@@ -34,6 +34,20 @@ eq('picks lowest total_amount + airline', cheapestOffer({
   ] },
 }), { total: 1480.5, currency: 'USD', airline: 'TAP Air Portugal' });
 eq('no offers → null', cheapestOffer({ data: { offers: [] } }), null);
+
+console.log('\ncheapestGoogleFlight (SerpAPI engine=google_flights)');
+eq('picks lowest price across best + other flights', cheapestGoogleFlight({
+  best_flights: [
+    { price: 980, flights: [{ airline: 'United' }] },
+    { price: 820, flights: [{ airline: 'TAP Air Portugal' }] },
+  ],
+  other_flights: [
+    { price: 760, flights: [{ airline: 'Iberia' }] },
+    { price: 1200, flights: [{ airline: 'Lufthansa' }] },
+  ],
+}), { total: 760, currency: 'USD', airline: 'Iberia' });
+eq('no flights → null', cheapestGoogleFlight({ best_flights: [], other_flights: [] }), null);
+eq('serp error payload → null', cheapestGoogleFlight({ best_flights: [], other_flights: [], _serpError: 'no results' }), null);
 
 console.log('\ncheapestStay (/stays/search)  — 2 rooms, 7 nights');
 const stayJson = { data: { results: [

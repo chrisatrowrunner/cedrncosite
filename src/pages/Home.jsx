@@ -20,7 +20,7 @@ export default function Home() {
             destination. Your pace. Everything taken care of.
           </p>
           <div className="hero__actions">
-            <Link to="/pricing" className="btn btn--navy">Plan Your Journey</Link>
+            <Link to="/pricing#estimator" className="btn btn--navy">Plan Your Journey</Link>
             <a href="#how" className="link-ghost">Learn how it works →</a>
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function Home() {
         <Divider />
       </div>
 
-      {/* 3. OUR STORY */}
+      {/* 3. OUR STORY + YOUR COMPANION (merged) */}
       <section id="story" className="story">
         <div className="story__grid">
           <div>
@@ -46,6 +46,27 @@ export default function Home() {
               <img src="/assets/img/avo.jpeg" alt="Christopher and his grandmother in Portugal" />
             </div>
             <p className="photo-caption">Christopher and his avó, Portugal.</p>
+          </div>
+        </div>
+
+        {/* Meet your companion */}
+        <div className="companion">
+          <div className="companion__media">
+            <div className="companion__frame">
+              <img src="/assets/img/headshot.jpeg" alt="Christopher dos Reis" />
+            </div>
+          </div>
+          <div>
+            <div className="eyebrow companion__eyebrow">Your Companion</div>
+            <h2 className="companion__h">Meet Christopher dos Reis.</h2>
+            <p>Christopher grew up in Bristol, Rhode Island in a Portuguese-American family with deep roots in the Minho region of Portugal. He graduated from the University of Rhode Island with a degree in Accounting and has traveled to over 10 countries across his lifetime, giving him firsthand knowledge of what it takes to navigate the world confidently and safely.</p>
+            <p>For the past year, he has also worked in private aviation security — sharpening the discretion, situational awareness, and calm-under-pressure judgment that keep travelers safe and at ease from the curb to the gate.</p>
+            <p>Conversational in Portuguese and deeply rooted in the culture, he founded Cedr &amp; Co to serve anyone who has a trip they keep putting off — whether that is a long-awaited return home, a bucket-list destination, or simply a journey they want handled with care.</p>
+            <div className="badges">
+              {['Private Aviation Security', 'Conversational Portuguese', 'URI Accounting Graduate', '10+ Countries Visited', 'CPR Certified', 'Bristol, Rhode Island'].map((b) => (
+                <span className="badge" key={b}>{b}</span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -110,7 +131,7 @@ export default function Home() {
           <span className="eyebrow">One Price, Everything Included</span>
           <h2>Curious what your journey might cost?</h2>
           <p>Build a personalized estimate in a few clicks — a starting point for our conversation, with no obligation.</p>
-          <Link to="/pricing" className="btn btn--navy">View pricing &amp; get an estimate →</Link>
+          <Link to="/pricing#estimator" className="btn btn--navy">View pricing &amp; get an estimate →</Link>
         </div>
       </section>
 
@@ -126,7 +147,13 @@ export default function Home() {
               ['nyc', 'New York City', 'Iconic, busy, and best experienced with someone who knows the way.'],
             ].map(([slug, name, tag]) => (
               <article className="dest-card" key={slug}>
-                <img className="dest-card__img" src={`/assets/img/${slug}.svg`} alt={name} />
+                <img
+                  className="dest-card__img"
+                  src={`/assets/img/${slug}.jpg`}
+                  onError={(e) => { e.currentTarget.src = `/assets/img/${slug}.svg`; }}
+                  alt={name}
+                  loading="lazy"
+                />
                 <Rosette className="dest-card__texture" />
                 <div className="dest-card__scrim"></div>
                 <div className="dest-card__body">
@@ -161,28 +188,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. ABOUT CHRISTOPHER */}
-      <section className="about">
-        <div className="about__grid">
-          <div className="about__media">
-            <div className="about__frame">
-              <img src="/assets/img/headshot.jpeg" alt="Christopher dos Reis" />
-            </div>
-          </div>
-          <div>
-            <div className="eyebrow about__eyebrow">Your Companion</div>
-            <h2 className="about__h">Christopher dos Reis</h2>
-            <p>Christopher grew up in Bristol, Rhode Island in a Portuguese-American family with deep roots in the Minho region of Portugal. He graduated from the University of Rhode Island with a degree in Accounting and has traveled to over 10 countries across his lifetime, giving him firsthand knowledge of what it takes to navigate the world confidently and safely.</p>
-            <p>Conversational in Portuguese and deeply rooted in the culture, he founded Cedr &amp; Co to serve anyone who has a trip they keep putting off — whether that is a long-awaited return home, a bucket list destination, or simply a journey they want handled with care.</p>
-            <div className="badges">
-              {['Conversational Portuguese', 'URI Accounting Graduate', '10+ Countries Visited', 'CPR Certified', 'Bristol, Rhode Island'].map((b) => (
-                <span className="badge" key={b}>{b}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 11. FINAL CTA */}
       <section id="cta" className="final-cta">
         <Rosette className="final-cta__art" />
@@ -190,7 +195,7 @@ export default function Home() {
           <span className="eyebrow">Ready to Begin</span>
           <h2>There's a trip you've been putting off.</h2>
           <p className="final-cta__sub">Tell us where you want to go. We'll handle everything else.</p>
-          <a href="#top" className="btn btn--gold">Start the Conversation</a>
+          <Link to="/pricing#estimator" className="btn btn--gold">Start the Conversation</Link>
         </div>
       </section>
 

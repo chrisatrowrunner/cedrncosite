@@ -50,6 +50,22 @@ export function cheapestOffer(json) {
   };
 }
 
+// SerpAPI engine=google_flights → cheapest itinerary summary, or null if none.
+// SerpAPI returns the round-trip total price (USD) for the requested passengers.
+export function cheapestGoogleFlight(json) {
+  const all = [...(json?.best_flights || []), ...(json?.other_flights || [])];
+  let best = null;
+  for (const f of all) {
+    const price = Number(f.price);
+    if (!isFinite(price) || price <= 0) continue;
+    if (!best || price < best.price) best = { price, flight: f };
+  }
+  if (!best) return null;
+  const segments = best.flight.flights || [];
+  const airline = segments[0]?.airline || best.flight.airline || 'Airline';
+  return { total: best.price, currency: 'USD', airline };
+}
+
 // POST /stays/search → cheapest per-room-per-night rate matching the star filter.
 // `rooms` is how many rooms were requested (rate total covers all of them).
 export function cheapestStay(json, nights, ratingSet = [], rooms = 2) {

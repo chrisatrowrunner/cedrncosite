@@ -116,7 +116,10 @@ All figures USD. Implemented in `src/lib/pricing.js` and locked by `pricing.test
 ## Notes
 
 - Google Fonts (Cormorant Garamond, Lora, Inter) load via `<link>` in `index.html`.
-- The destination **city photos** in the homepage grid are on-brand vector
-  placeholders (`public/assets/img/*.svg`); swap in real photos by replacing those files.
+- The destination **city photos** use real photos when present and fall back to the
+  on-brand vector art otherwise. To use real photos, drop these files into
+  `public/assets/img/`: `porto.jpg`, `rome.jpg`, `tokyo.jpg`, `nyc.jpg`. Each card
+  loads `<slug>.jpg` and automatically falls back to `<slug>.svg` if the photo is
+  missing — so no code change is needed to add them.
 - Duffel’s Stays response shape can evolve; parsing lives in `api/_map.js`
   (`cheapestStay`) and is covered by `api/_map.test.js` if you need to adjust it.

@@ -31,7 +31,7 @@ export default function Nav() {
         >
           Pricing
         </Link>
-        <Link to="/#cta" className="nav__cta" onClick={close}>Start the Conversation</Link>
+        <Link to="/pricing#estimator" className="nav__cta" onClick={close}>Start the Conversation</Link>
       </div>
     </nav>
   );

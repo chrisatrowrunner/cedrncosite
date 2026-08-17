@@ -1,54 +1,56 @@
 // GET /api/flights?origin=BOS&destination=OPO&departureDate=2026-09-12&returnDate=2026-09-19&adults=2&cabin=economy
-// Flight search via Duffel Offer Requests (POST /air/offer-requests).
+// Flight search via SerpAPI Google Flights (engine=google_flights).
 // Always `adults` passengers (client(s) + Christopher): solo = 2, couple = 3.
-import { duffelPost, duffelConfigured, send } from './_duffel.js';
-import { cheapestOffer } from './_map.js';
+import { serpapiSearch, serpapiConfigured } from './_serpapi.js';
+import { cheapestGoogleFlight } from './_map.js';
+import { send } from './_http.js';
 
-const VALID_CABIN = new Set(['economy', 'premium_economy', 'business', 'first']);
+// Our cabin values → Google Flights travel_class (1 Economy, 2 Premium economy, 3 Business, 4 First)
+const TRAVEL_CLASS = { economy: 1, premium: 2, business: 3 };
 
-async function offerRequest({ origin, destination, departureDate, returnDate, passengers, cabin }) {
-  const body = {
-    data: {
-      cabin_class: cabin,
-      passengers: Array.from({ length: passengers }, () => ({ type: 'adult' })),
-      slices: [
-        { origin, destination, departure_date: departureDate },
-        { origin: destination, destination: origin, departure_date: returnDate },
-      ],
-    },
-  };
-  // return_offers=true (default) returns offers inline with the request.
-  const json = await duffelPost('/air/offer-requests?return_offers=true', body);
-  return cheapestOffer(json);
+async function googleFlights({ origin, destination, departureDate, returnDate, adults, travelClass }) {
+  const json = await serpapiSearch({
+    engine: 'google_flights',
+    departure_id: origin,
+    arrival_id: destination,
+    outbound_date: departureDate,
+    return_date: returnDate,
+    travel_class: travelClass,
+    adults,
+    currency: 'USD',
+    hl: 'en',
+    gl: 'us',
+  });
+  return cheapestGoogleFlight(json);
 }
 
 export default async function handler(req, res) {
   const { origin, destination, departureDate, returnDate } = req.query;
-  const passengers = Math.max(1, parseInt(req.query.adults, 10) || 2);
-  let cabin = (req.query.cabin || 'economy').toString().toLowerCase();
-  if (!VALID_CABIN.has(cabin)) cabin = 'economy';
+  const adults = Math.max(1, parseInt(req.query.adults, 10) || 2);
+  const cabin = (req.query.cabin || 'economy').toString().toLowerCase();
+  const travelClass = TRAVEL_CLASS[cabin] || 1;
 
   if (!origin || !destination || !departureDate || !returnDate) {
     return send(res, 400, { error: 'missing_params' });
   }
-  if (!duffelConfigured()) {
+  if (!serpapiConfigured()) {
     return send(res, 503, { error: 'not_configured' });
   }
 
-  const base = { origin, destination, departureDate, returnDate, passengers };
+  const base = { origin, destination, departureDate, returnDate, adults };
   try {
-    let result = await offerRequest({ ...base, cabin });
+    let result = await googleFlights({ ...base, travelClass });
     let businessFallback = false;
 
-    // Business selected but no inventory → fall back to Premium Economy, flagged.
+    // Business selected but nothing returned → fall back to Premium Economy, flagged.
     if (!result && cabin === 'business') {
-      result = await offerRequest({ ...base, cabin: 'premium_economy' });
+      result = await googleFlights({ ...base, travelClass: 2 });
       if (result) businessFallback = true;
     }
 
     if (!result) return send(res, 200, { found: false });
-    return send(res, 200, { found: true, ...result, seats: passengers, cabin, businessFallback });
+    return send(res, 200, { found: true, ...result, seats: adults, cabin, businessFallback });
   } catch (err) {
-    return send(res, 502, { error: 'duffel_error', message: err.message, found: false });
+    return send(res, 502, { error: 'serpapi_error', message: err.message, found: false });
   }
 }

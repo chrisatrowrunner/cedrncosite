@@ -95,10 +95,6 @@ const BOS_TRANSPORT = 120;
 export const CABIN_LABEL = { economy: 'Economy', premium: 'Premium Economy', business: 'Business Class' };
 export const STAR_LABEL = { budget: '2–3 star', comfortable: '3–4 star', luxury: '5 star' };
 
-// Duffel cabin_class values
-export function duffelCabinClass(flightClass) {
-  return { economy: 'economy', premium: 'premium_economy', business: 'business' }[flightClass] || 'economy';
-}
 // Star ratings to accept per trip feel (used to filter Duffel Stays results)
 export function starRatingSet(feel) {
   return { budget: [2, 3], comfortable: [3, 4], luxury: [5] }[feel] || [3, 4];

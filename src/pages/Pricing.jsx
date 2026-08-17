@@ -6,7 +6,7 @@ import CityAutocomplete from '../components/CityAutocomplete.jsx';
 import Segmented from '../components/Segmented.jsx';
 import EstimateBreakdown from '../components/EstimateBreakdown.jsx';
 import { searchFlights, searchHotels } from '../lib/api.js';
-import { computeEstimate, counts, duffelCabinClass, starRatingSet, nightsBetween } from '../lib/pricing.js';
+import { computeEstimate, counts, starRatingSet, nightsBetween } from '../lib/pricing.js';
 
 const emptyCity = { text: '', code: null, countryCode: null, countryName: '', cityName: '', latitude: null, longitude: null };
 
@@ -83,7 +83,7 @@ export default function Pricing() {
       ? searchFlights({
           origin: departure.code, destination: destination.code,
           departureDate: departDate, returnDate,
-          adults: seats, cabin: duffelCabinClass(flightClass),
+          adults: seats, cabin: flightClass,
         })
       : Promise.resolve(null);
     const hotelP = destination.latitude != null && destination.longitude != null

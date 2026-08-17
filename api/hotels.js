@@ -1,8 +1,9 @@
 // GET /api/hotels?latitude=41.24&longitude=-8.67&checkInDate=2026-09-12&checkOutDate=2026-09-19&ratings=3,4
 // Hotel search via Duffel Stays (POST /stays/search). Always 2 rooms
 // (client room + Christopher's room). Star filter comes from trip feel.
-import { duffelPost, duffelConfigured, send } from './_duffel.js';
+import { duffelPost, duffelConfigured } from './_duffel.js';
 import { cheapestStay } from './_map.js';
+import { send } from './_http.js';
 
 const ROOMS = 2;
 
